@@ -2,7 +2,17 @@
 
 <div class="row-fluid navmargin">
     <div class="page-header">
-        <h1>{{ .Title }} - {{ .Date.Format "Mon, Jan 2, 2006" }}</h1>
+        <h1>
+            {{ .Title }}
+            <!--
+            only render date if it's present
+            if no date is provided, time.Time is uninitialized to the year 1
+            -->
+            {{ if not (eq (.Date.Format "2006") "0001") }}
+                -
+                {{ .Date.Format "Mon, Jan 2, 2006" }}
+            {{ end }}
+        </h1>
     </div>
     <p class="lead">{{ .Params.description }}</p>
     {{ .Content }}
